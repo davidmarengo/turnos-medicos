@@ -6,3 +6,14 @@ export const getUsers = async () => {
   const data = await response.json();
   return data;
 };
+
+export const getUserByEmail = async (email) => {
+  const response = await fetch(`${API_URL}/users?email=${encodeURIComponent(email)}`);
+
+  if (response.status === 404) {
+    return [];
+  }
+
+  const data = await response.json();
+  return data;
+};
