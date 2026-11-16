@@ -19,6 +19,6 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-    saveSession(user);
-  mensaje.textContent = `Bienvenido, ${user.nombre}`;
+  saveSession(user);
+  window.location.href = "medicos.html";
 });

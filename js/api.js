@@ -27,3 +27,9 @@ export const createUser = async (user) => {
   const data = await response.json();
   return data;
 };
+
+export const getDoctors = async () => {
+  const response = await fetch(`${API_URL}/doctors`);
+  const data = await response.json();
+  return data;
+};
