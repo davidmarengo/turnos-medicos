@@ -10,3 +10,7 @@ export const getSession = () => {
   const data = localStorage.getItem(SESSION_KEY);
   return data ? JSON.parse(data) : null;
 };
+
+export const clearSession = () => {
+  localStorage.removeItem(SESSION_KEY);
+};

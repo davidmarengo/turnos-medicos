@@ -1,5 +1,5 @@
 // js/navbar.js
-import { getSession } from "./session.js";
+import { getSession, clearSession } from "./session.js";
 
 const MENUS = {
   GUEST: [
@@ -30,4 +30,16 @@ export const renderNavbar = () => {
     link.href = item.href;
     nav.appendChild(link);
   });
+
+  if (session) {
+    const logout = document.createElement("a");
+    logout.textContent = "Cerrar sesión";
+    logout.href = "#";
+    logout.addEventListener("click", (event) => {
+      event.preventDefault();
+      clearSession();
+      window.location.href = "login.html";
+    });
+    nav.appendChild(logout);
+  }
 };
