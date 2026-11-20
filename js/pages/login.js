@@ -20,5 +20,6 @@ form.addEventListener("submit", async (event) => {
   }
 
   saveSession(user);
-  window.location.href = "medicos.html";
+    window.location.href = user.role === "ADMIN" ? "admin-medicos.html" : "medicos.html";
+
 });

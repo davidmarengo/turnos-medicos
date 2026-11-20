@@ -1,9 +1,9 @@
 // js/pages/mis-turnos.js
-import { getSession } from "../session.js";
+import { requireRole } from "../session.js";
 import { renderNavbar } from "../navbar.js";
 import { getAppointments, getDoctors, updateAppointment } from "../api.js";
 
-const session = getSession();
+const session = requireRole("USUARIO");;
 
 const renderTurnos = (turnos, doctors) => {
   const contenedor = document.getElementById("lista-turnos");
@@ -55,9 +55,7 @@ const cargarTurnos = async () => {
   renderTurnos(misTurnos, doctors);
 };
 
-if (!session || session.role !== "USUARIO") {
-  window.location.href = "login.html";
-} else {
+if (session) {
   renderNavbar();
   cargarTurnos();
 }

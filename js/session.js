@@ -14,3 +14,14 @@ export const getSession = () => {
 export const clearSession = () => {
   localStorage.removeItem(SESSION_KEY);
 };
+
+export const requireRole = (role) => {
+  const session = getSession();
+
+  if (!session || session.role !== role) {
+    window.location.href = "login.html";
+    return null;
+  }
+
+  return session;
+};

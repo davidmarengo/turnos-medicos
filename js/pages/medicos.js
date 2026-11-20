@@ -1,9 +1,9 @@
 // js/pages/medicos.js
 import { renderNavbar } from "../navbar.js";
-import { getSession } from "../session.js";
+import { requireRole } from "../session.js";
 import { getDoctors } from "../api.js"; 
 
-const session = getSession();
+const session = requireRole("USUARIO");
 
 const renderMedicos = (doctors) => {
   const contenedor = document.getElementById("lista-medicos");
@@ -34,10 +34,8 @@ const cargarMedicos = async () => {
   renderMedicos(doctors);
 };
 
-if (!session) {
-  window.location.href = "login.html";
-} else {
+if (session) {
   document.getElementById("saludo").textContent = `Hola, ${session.nombre}`;
   renderNavbar();
   cargarMedicos();
-  }
+}
