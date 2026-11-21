@@ -7,9 +7,23 @@
 </head>
 <body>
   <nav id="navbar"></nav>
-  <main>
+    <main>
     <h1>Sacar turno</h1>
     <section id="datos-medico"></section>
+
+    <form id="reserva-form">
+      <label for="fecha">Fecha</label>
+      <input type="date" id="fecha" name="fecha" required>
+
+      <label for="hora">Hora</label>
+      <select id="hora" name="hora" required>
+        <option value="">Elegí un horario</option>
+      </select>
+
+      <button type="submit">Confirmar turno</button>
+    </form>
+
+    <p id="mensaje"></p>
   </main>
   <script type="module" src="js/pages/reservar.js"></script>
 </body>
