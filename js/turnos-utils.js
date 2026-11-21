@@ -21,3 +21,14 @@ const hoyISO = () => {
 };
 
 export const esFechaPasada = (fecha) => fecha < hoyISO();
+
+export const estaOcupado = (appointments, doctorId, fecha, hora) =>
+  appointments.some(
+    (a) =>
+      a.doctorId === doctorId &&
+      a.fecha === fecha &&
+      a.hora === hora &&
+      a.estado !== "Cancelado"
+  );
+
+  export const ESTADOS = ["Pendiente", "Confirmado", "Cancelado", "Atendido"];

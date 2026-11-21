@@ -1,9 +1,8 @@
 // js/pages/reservar.js
 import { requireRole } from "../session.js";
 import { renderNavbar } from "../navbar.js";
-import { getDoctors } from "../api.js";
-import { HORARIOS, getNombreDia, esFechaPasada } from "../turnos-utils.js"; 
-
+import { getDoctors, getAppointments, createAppointment } from "../api.js";
+import { HORARIOS, getNombreDia, esFechaPasada, estaOcupado } from "../turnos-utils.js";
 const session = requireRole("USUARIO");
 let medico = null;
 
@@ -46,7 +45,7 @@ const iniciarFormulario = () => {
 
   const form = document.getElementById("reserva-form");
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const fecha = document.getElementById("fecha").value;
@@ -69,7 +68,24 @@ const iniciarFormulario = () => {
       return;
     }
 
-    mensaje.textContent = "Fecha y hora válidas";
+       const appointments = await getAppointments();
+    if (estaOcupado(appointments, medico.id, fecha, hora)) {
+      mensaje.textContent = "Ese horario ya está ocupado, elegí otro";
+      return;
+    }
+
+    await createAppointment({
+      patientId: session.id,
+      doctorId: medico.id,
+      fecha,
+      hora,
+      estado: "Pendiente",
+    });
+
+    mensaje.textContent = "Turno solicitado correctamente";
+    setTimeout(() => {
+      window.location.href = "mis-turnos.html";
+    }, 1500);
   });
 };
 
