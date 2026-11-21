@@ -24,7 +24,10 @@ const renderMedicos = (doctors) => {
     const dias = document.createElement("p");
     dias.textContent = `Días: ${doctor.diasDisponibles.join(", ")}`;
 
-    card.append(foto, nombre, especialidad, dias);
+    const boton = document.createElement("a");
+    boton.textContent = "Sacar turno";
+    boton.href = `reservar.html?doctorId=${doctor.id}`;
+    card.append(foto, nombre, especialidad, dias, boton);
     contenedor.appendChild(card);
   });
 };
