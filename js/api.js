@@ -51,56 +51,42 @@ export const updateAppointment = async (id, data) => {
   return result;
 };
 
+
+// ---------- MÉDICOS ----------
 export const createDoctor = async (doctor) => {
   const response = await fetch(`${API_URL}/doctors`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(doctor),
   });
-  const data = await response.json();
-  return data;
+  return await response.json();
 };
 
-export const updateDoctor = async (id, doctor) => {
+export const updateDoctor = async (id, data) => {
   const response = await fetch(`${API_URL}/doctors/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(doctor),
+    body: JSON.stringify(data),
   });
-  const data = await response.json();
-  return data;
+  return await response.json();
 };
 
-export const deleteDoctor = async (id) => {
-  const response = await fetch(`${API_URL}/doctors/${id}`, {
-    method: "DELETE",
-  });
-  return response.ok;
+export const getDoctorById = async (id) => {
+  const response = await fetch(`${API_URL}/doctors/${id}`);
+  return await response.json();
 };
 
-export const updateUser = async (id, user) => {
+// ---------- USUARIOS (admin) ----------
+export const getUsersFull = async () => {
+  const response = await fetch(`${API_URL}/users`);
+  return await response.json();
+};
+
+export const updateUser = async (id, data) => {
   const response = await fetch(`${API_URL}/users/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    body: JSON.stringify(data),
   });
-  const data = await response.json();
-  return data;
-};
-
-export const deleteUser = async (id) => {
-  const response = await fetch(`${API_URL}/users/${id}`, {
-    method: "DELETE",
-  });
-  return response.ok;
-};
-
-export const createAppointment = async (appointment) => {
-  const response = await fetch(`${API_URL_CITAS}/appointments`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(appointment),
-  });
-  const data = await response.json();
-  return data;
+  return await response.json();
 };
