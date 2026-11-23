@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TÍTULO - Turnos Médicos</title>
+</head>
+<body>
+  <nav id="navbar"></nav>
+  <main>
+    <h1>TÍTULO</h1>
+    <table id="tabla-turnos">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-turnos-body"></tbody>
+    </table>
+    <form id="reprogramar-form" hidden>
+      <h2>Reprogramar turno</h2>
+      <p id="reprogramar-info"></p>
+
+      <label for="nueva-fecha">Nueva fecha</label>
+      <input type="date" id="nueva-fecha" name="nueva-fecha" required>
+
+      <label for="nueva-hora">Nueva hora</label>
+      <select id="nueva-hora" name="nueva-hora" required></select>
+
+      <button type="submit">Guardar</button>
+      <button type="button" id="cancelar-reprogramar">Cerrar</button>
+    </form>
+
+    <p id="mensaje"></p>
+  </main>
+  <script type="module" src="js/pages/admin-turnos.js"></script>
+</body>
+</html>

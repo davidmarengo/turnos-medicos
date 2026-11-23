@@ -1,9 +1,12 @@
 // js/pages/login.js
 import { getUserByEmail } from "../api.js";
 import { saveSession } from "../session.js";
+import { renderNavbar } from "../navbar.js";
 
 const form = document.getElementById("login-form");
 const mensaje = document.getElementById("mensaje");
+
+renderNavbar();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -20,5 +23,6 @@ form.addEventListener("submit", async (event) => {
   }
 
   saveSession(user);
-  window.location.href = "medicos.html";
+    window.location.href = user.role === "ADMIN" ? "admin-medicos.html" : "medicos.html";
+
 });

@@ -9,6 +9,7 @@ const MENUS = {
   USUARIO: [
     { texto: "Médicos", href: "medicos.html" },
     { texto: "Mis turnos", href: "mis-turnos.html" },
+    { texto: "Mi perfil", href: "perfil.html" },
   ],
   ADMIN: [
     { texto: "Médicos", href: "admin-medicos.html" },

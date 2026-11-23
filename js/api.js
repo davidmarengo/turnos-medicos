@@ -50,3 +50,57 @@ export const updateAppointment = async (id, data) => {
   const result = await response.json();
   return result;
 };
+
+export const createDoctor = async (doctor) => {
+  const response = await fetch(`${API_URL}/doctors`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(doctor),
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const updateDoctor = async (id, doctor) => {
+  const response = await fetch(`${API_URL}/doctors/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(doctor),
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const deleteDoctor = async (id) => {
+  const response = await fetch(`${API_URL}/doctors/${id}`, {
+    method: "DELETE",
+  });
+  return response.ok;
+};
+
+export const updateUser = async (id, user) => {
+  const response = await fetch(`${API_URL}/users/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const deleteUser = async (id) => {
+  const response = await fetch(`${API_URL}/users/${id}`, {
+    method: "DELETE",
+  });
+  return response.ok;
+};
+
+export const createAppointment = async (appointment) => {
+  const response = await fetch(`${API_URL_CITAS}/appointments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(appointment),
+  });
+  const data = await response.json();
+  return data;
+};
