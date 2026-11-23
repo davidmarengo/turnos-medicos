@@ -21,6 +21,21 @@
     </form>
 
     <p id="mensaje"></p>
+    <h2>Cambiar contraseña</h2>
+    <form id="password-form">
+      <label for="password-actual">Contraseña actual</label>
+      <input type="password" id="password-actual" name="password-actual" required>
+
+      <label for="password-nueva">Contraseña nueva</label>
+      <input type="password" id="password-nueva" name="password-nueva" required minlength="6">
+
+      <label for="password-repetida">Repetir contraseña nueva</label>
+      <input type="password" id="password-repetida" name="password-repetida" required minlength="6">
+
+      <button type="submit">Cambiar contraseña</button>
+    </form>
+
+    <p id="mensaje-password"></p>
   </main>
   <script type="module" src="js/pages/perfil.js"></script>
 </body>

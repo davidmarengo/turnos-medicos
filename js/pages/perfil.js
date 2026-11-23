@@ -44,8 +44,46 @@ const iniciarFormulario = () => {
   });
 };
 
+const iniciarFormularioPassword = () => {
+  const form = document.getElementById("password-form");
+  const mensaje = document.getElementById("mensaje-password");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!usuario) {
+      return;
+    }
+
+    const actual = document.getElementById("password-actual").value;
+    const nueva = document.getElementById("password-nueva").value;
+    const repetida = document.getElementById("password-repetida").value;
+
+    if (actual !== usuario.password) {
+      mensaje.textContent = "La contraseña actual es incorrecta";
+      return;
+    }
+
+    if (nueva === actual) {
+      mensaje.textContent = "La contraseña nueva debe ser distinta de la actual";
+      return;
+    }
+
+    if (nueva !== repetida) {
+      mensaje.textContent = "Las contraseñas nuevas no coinciden";
+      return;
+    }
+
+    const actualizado = await updateUser(usuario.id, { ...usuario, password: nueva });
+    usuario = actualizado;
+    form.reset();
+    mensaje.textContent = "Contraseña actualizada correctamente";
+  });
+};
+
 if (session) {
   renderNavbar();
   iniciarFormulario();
+  iniciarFormularioPassword();
   cargarPerfil();
 }
