@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Médicos - Turnos Médicos</title>
+</head>
+<body>
+  <nav id="navbar"></nav>
+  <main>
+    <h1>Administración de Médicos</h1>
+
+    <section>
+      <h2>Alta de médico</h2>
+      <form id="form-medico">
+        <input type="hidden" id="doctor-id">
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" required minlength="3">
+
+        <label for="especialidad">Especialidad</label>
+        <input type="text" id="especialidad" required minlength="3">
+
+        <label for="foto">URL de foto</label>
+        <input type="url" id="foto" placeholder="https://..." required>
+
+        <label for="dias">Días disponibles (separados por coma)</label>
+        <input type="text" id="dias" placeholder="Lunes, Miércoles, Viernes" required>
+
+        <button type="submit" id="btn-submit">Crear médico</button>
+        <button type="button" id="btn-cancelar" hidden>Cancelar edición</button>
+      </form>
+      <p id="mensaje"></p>
+    </section>
+
+    <section>
+      <h2>Médicos registrados</h2>
+      <div id="lista-medicos"></div>
+    </section>
+  </main>
+  <script type="module" src="js/pages/admin-medicos.js"></script>
+</body>
+</html>
