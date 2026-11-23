@@ -2,15 +2,17 @@
 import { requireRole } from "../session.js";
 import { renderNavbar } from "../navbar.js";
 import { getAppointments, getDoctors, getUsers, updateAppointment } from "../api.js";
-import { ESTADOS, HORARIOS } from "../turnos-utils.js"; ;
+import { ESTADOS, HORARIOS, getNombreDia, esFechaPasada, estaOcupado } from "../turnos-utils.js";
 
 const session = requireRole("ADMIN");
 
 let turnoActual = null;
+let doctorActual = null;
 const formReprogramar = document.getElementById("reprogramar-form");
 
 const abrirReprogramar = (turno, doctor, paciente) => {
   turnoActual = turno;
+  doctorActual = doctor; 
 
   const nombrePaciente = paciente ? paciente.nombre : "Paciente";
   const nombreMedico = doctor ? doctor.nombre : "Médico";
@@ -95,6 +97,43 @@ const iniciarFormulario = () => {
     formReprogramar.hidden = true;
     turnoActual = null;
   });
+  formReprogramar.addEventListener("submit", async (event) => {          // ← AGREGAR DESDE ACÁ
+    event.preventDefault();
+
+    const fecha = document.getElementById("nueva-fecha").value;
+    const hora = selectHora.value;
+    const mensaje = document.getElementById("mensaje");
+
+    if (!doctorActual) {
+      mensaje.textContent = "No se encontró el médico de este turno";
+      return;
+    }
+
+    if (esFechaPasada(fecha)) {
+      mensaje.textContent = "No se puede reprogramar a una fecha pasada";
+      return;
+    }
+
+    const dia = getNombreDia(fecha);
+    if (!doctorActual.diasDisponibles.includes(dia)) {
+      mensaje.textContent = `El médico no atiende el día ${dia}. Atiende: ${doctorActual.diasDisponibles.join(", ")}`;
+      return;
+    }
+
+    const appointments = await getAppointments();
+    const otros = appointments.filter((a) => a.id !== turnoActual.id);
+    if (estaOcupado(otros, turnoActual.doctorId, fecha, hora)) {
+      mensaje.textContent = "Ese horario ya está ocupado, elegí otro";
+      return;
+    }
+
+    await updateAppointment(turnoActual.id, { ...turnoActual, fecha, hora });
+
+    mensaje.textContent = "Turno reprogramado correctamente";
+    formReprogramar.hidden = true;
+    turnoActual = null;
+    cargarTurnos();
+  }); 
 };
 
 if (session) {
