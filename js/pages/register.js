@@ -1,7 +1,11 @@
 // js/pages/register.js
 import { getUserByEmail, createUser } from "../api.js";
+import { renderNavbar } from "../navbar.js";
+
 const form = document.getElementById("register-form");
 const mensaje = document.getElementById("mensaje");
+
+renderNavbar();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
