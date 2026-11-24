@@ -29,6 +29,16 @@ h1 {
     padding: 10px 2%;
 }
 
+#nav-list {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
+.nav-link {
+    padding: 3px 2%;
+}
+
 #main {
     display: flex;
     grid-area: main;
@@ -57,9 +67,19 @@ h1 {
     grid-column-end: 3;
 }
 
+#login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 label {
     display: block;
     font-size: 1.2rem;
+}
+
+input{
+    display: block;
 }
 
 #footer {

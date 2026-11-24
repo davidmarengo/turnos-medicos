@@ -3,33 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Turnos Médicos</title>
+  <title>Registrarse - Turnos Médicos</title>
+  <link rel="stylesheet" href="styles/register.css">
 </head>
 <body>
-  <nav id="navbar"></nav>
-  <main>
-    <h1>Crear cuenta</h1>
+  <header id="header">
+    <h1 id="title">Turnos Médicos</h1>
+    <nav id="nav">
+      <ul id="nav-list">
+        <li class="nav-link"><a href="index.html">Inicio</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <section id="main-container">
+      <div id="register-container">
+        <h1 id="register-title">Registrarse</h1>
+        <form id="register-form">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required minlength="3">
 
-    <form id="register-form">
-      <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" name="nombre" required minlength="3">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required minlength="6">
 
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" name="password" required minlength="6">
+          <label for="password2">Repetir contraseña</label>
+          <input type="password" id="password2" name="password2" required minlength="6">
 
-      <label for="password2">Repetir contraseña</label>
-      <input type="password" id="password2" name="password2" required minlength="6">
+          <button type="submit">Registrarme</button>
+        </form>
 
-      <button type="submit">Registrarme</button>
-    </form>
+        <p id="mensaje"></p>
 
-    <p id="mensaje"></p>
-
-    <p>¿Ya tenés cuenta? <a href="login.html">Iniciá sesión</a></p>
+        <p>¿Ya tenés una cuenta? <a href="login.html">Ingresá aquí</a></p>
+      </div>
+    </section>
   </main>
-  <script type="module" src="js/pages/register.js"></script>
+  <footer id="footer">
+    <section id="copyright">
+      <p>
+        Copyright © 2020 - 2026
+      </p>
+    </section>
+    <section id="contact">
+      <p>
+        Numero de emergencia - 000-123-45678
+      </p>
+      <p>
+        Correo electrónico - contactus@email.com.ar
+      </p>
+    </section>
+  </footer>
+  <script type="module" src="js/pages/login.js"></script>
 </body>
 </html>
+
