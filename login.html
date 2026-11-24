@@ -4,25 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar sesión - Turnos Médicos</title>
+  <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
-  <main>
-    <h1>Iniciar sesión</h1>
+  <header id="header">
+    <h1 id="title">Turnos Médicos</h1>
+    <nav id="nav">
+    </nav>
+  </header>
+  <main id="main">
+    <section id="main-container">
+      <div id="login-container">
+        <h1 id="login-title">Iniciar Sesión</h1>
+        <form id="login-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
 
-    <form id="login-form">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required>
 
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" name="password" required>
+          <button type="submit">Ingresar</button>
+        </form>
 
-      <button type="submit">Ingresar</button>
-    </form>
+        <p id="mensaje"></p>
 
-    <p id="mensaje"></p>
-
-    <p>¿No tenés cuenta? <a href="register.html">Registrate</a></p>
+        <p>¿No tenés cuenta? <a href="register.html">Registrate</a></p>
+      </div>
+    </section>
   </main>
+  <footer id="footer">
+    <section id="copyright">
+      <p>
+        Copyright © 2020 - 2026
+      </p>
+    </section>
+    <section id="contact">
+      <p>
+        Numero de emergencia - 000-123-45678
+      </p>
+      <p>
+        Correo electrónico - contactus@email.com.ar
+      </p>
+    </section>
+  </footer>
   <script type="module" src="js/pages/login.js"></script>
 </body>
 </html>

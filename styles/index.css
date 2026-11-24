@@ -39,6 +39,68 @@ body {
     grid-area: main;
 }
 
+#main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex: 1;
+    background-image: url("../media/index_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    align-content: center;
+    padding: 5px;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+#map-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 4fr;
+    background-color: #ffffffaa;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 20px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    gap: 5px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-item p {
+    margin: 0;
+    font-size: 2rem;
+}
+
+#tel-icon, #loc-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+#main-article {
+    background-color: #ffffffaa;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 20px;
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+#main-article h1 {
+    font-size: 3rem;
+    text-align: right;
+}
+
+#main-article p {
+    font-size: 1.5rem;
+    text-align: justify;
+}
+
 #footer {
     display: flex;
     grid-area: footer;
