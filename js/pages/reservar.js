@@ -2,7 +2,7 @@
 import { requireRole } from "../session.js";
 import { renderNavbar } from "../navbar.js";
 import { getDoctors, getAppointments, createAppointment } from "../api.js";
-import { HORARIOS, getNombreDia, esFechaPasada, estaOcupado } from "../turnos-utils.js";
+import { HORARIOS, getNombreDia, esFechaPasada, estaOcupado, atiendeEseDia } from "../turnos-utils.js";
 const session = requireRole("USUARIO");
 let medico = null;
 
@@ -28,7 +28,7 @@ const cargarMedico = async () => {
   especialidad.textContent = doctor.especialidad;
 
   const dias = document.createElement("p");
-  dias.textContent = `Días: ${doctor.diasDisponibles.join(", ")}`;
+  dias.textContent = `Días: ${(doctor.diasDisponibles || []).join(", ")}`;
 
   contenedor.append(nombre, especialidad, dias);
 };
@@ -63,24 +63,30 @@ const iniciarFormulario = () => {
     }
 
     const dia = getNombreDia(fecha);
-    if (!medico.diasDisponibles.includes(dia)) {
-      mensaje.textContent = `El médico no atiende el día ${dia}. Atiende: ${medico.diasDisponibles.join(", ")}`;
+    if (!atiendeEseDia(medico, dia)) {
+      mensaje.textContent = `El médico no atiende el día ${dia}. Atiende: ${(medico.diasDisponibles || []).join(", ")}`;
       return;
     }
 
-       const appointments = await getAppointments();
+    const appointments = await getAppointments();
     if (estaOcupado(appointments, medico.id, fecha, hora)) {
       mensaje.textContent = "Ese horario ya está ocupado, elegí otro";
       return;
     }
 
-    await createAppointment({
+    try {
+      await createAppointment({
       patientId: session.id,
       doctorId: medico.id,
       fecha,
       hora,
       estado: "Pendiente",
-    });
+      });
+    } catch (error) {
+      console.error(error);
+      mensaje.textContent = "No se pudo guardar el turno. Revisá la conexión e intentá de nuevo.";
+      return;
+    }
 
     mensaje.textContent = "Turno solicitado correctamente";
     setTimeout(() => {
@@ -91,6 +97,9 @@ const iniciarFormulario = () => {
 
 if (session) {
   renderNavbar();
-  cargarMedico();
+  cargarMedico().catch((error) => {
+    console.error(error);
+    document.getElementById("datos-medico").textContent = "No se pudieron cargar los médicos. Revisá la conexión e intentá de nuevo.";
+  });
   iniciarFormulario(); 
 }

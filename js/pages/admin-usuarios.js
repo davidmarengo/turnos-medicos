@@ -16,6 +16,7 @@ if (!session || session.role !== "ADMIN") {
 const form = document.getElementById("form-usuario");
 const mensajeCrear = document.getElementById("mensaje-crear");
 const contenedor = document.getElementById("lista-usuarios");
+const botonCrear = form.querySelector('button[type="submit"]');
 
 const renderUsuarios = (users) => {
   contenedor.innerHTML = "";
@@ -73,13 +74,15 @@ form.addEventListener("submit", async (event) => {
   mensajeCrear.textContent = "";
 
   const nombre = document.getElementById("nombre").value.trim();
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
   const role = document.getElementById("role").value;
 
+  botonCrear.disabled = true;
+  botonCrear.textContent = "Creando…";
   try {
     const existentes = await getUserByEmail(email);
-    if (existentes.find((u) => u.email === email)) {
+    if (existentes.find((u) => String(u.email).trim().toLowerCase() === email)) {
       mensajeCrear.textContent = "Ese email ya está registrado.";
       return;
     }
@@ -87,12 +90,23 @@ form.addEventListener("submit", async (event) => {
     await createUser({ nombre, email, password, role });
     mensajeCrear.textContent = "Usuario creado correctamente.";
     form.reset();
-    await cargarUsuarios();
+    try {
+      await cargarUsuarios();
+    } catch (error) {
+      console.error(error);
+      mensajeCrear.textContent = "Usuario creado, pero no se pudo actualizar la lista. Recargá la página.";
+    }
   } catch (error) {
-    mensajeCrear.textContent = "Error al crear el usuario.";
+    mensajeCrear.textContent = `No se pudo crear el usuario. ${error.message || "Revisá la conexión y los datos."}`;
     console.error(error);
+  } finally {
+    botonCrear.disabled = false;
+    botonCrear.textContent = "Crear usuario";
   }
 });
 
 renderNavbar();
-cargarUsuarios();
+cargarUsuarios().catch((error) => {
+  console.error(error);
+  contenedor.textContent = "No se pudo cargar la lista de usuarios. Revisá la conexión e intentá recargar.";
+});

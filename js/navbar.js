@@ -20,7 +20,13 @@ const MENUS = {
 };
 
 export const renderNavbar = () => {
-  const nav = document.getElementById("navbar");
+  // Algunas páginas usan un <nav id="navbar"> y otras un <ul id="nav-list">.
+  const nav = document.getElementById("navbar") ||
+    document.getElementById("nav-list") ||
+    document.getElementById("nav");
+  if (!nav) return;
+
+  nav.replaceChildren();
   const session = getSession();
   const rol = session ? session.role : "GUEST";
   const items = MENUS[rol] || MENUS.GUEST;
@@ -29,7 +35,14 @@ export const renderNavbar = () => {
     const link = document.createElement("a");
     link.textContent = item.texto;
     link.href = item.href;
-    nav.appendChild(link);
+    if (nav.tagName === "UL" || nav.tagName === "OL") {
+      const item = document.createElement("li");
+      item.className = "nav-link";
+      item.appendChild(link);
+      nav.appendChild(item);
+    } else {
+      nav.appendChild(link);
+    }
   });
 
   if (session) {
@@ -41,6 +54,13 @@ export const renderNavbar = () => {
       clearSession();
       window.location.href = "login.html";
     });
-    nav.appendChild(logout);
+    if (nav.tagName === "UL" || nav.tagName === "OL") {
+      const item = document.createElement("li");
+      item.className = "nav-link";
+      item.appendChild(logout);
+      nav.appendChild(item);
+    } else {
+      nav.appendChild(logout);
+    }
   }
 };

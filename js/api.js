@@ -2,91 +2,88 @@
 const API_URL = "https://6af4a52255a1de7dcf04572d.mockapi.io";
 const API_URL_CITAS = "https://6afbac0e892984c4494a071b.mockapi.io";
 
+const request = async (url, options) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Error del servidor (${response.status})`);
+  }
+  return response.json();
+};
+
 export const getUsers = async () => {
-  const response = await fetch(`${API_URL}/users`);
-  const data = await response.json();
-  return data;
+  return request(`${API_URL}/users`);
 };
 
 export const getUserByEmail = async (email) => {
   const response = await fetch(`${API_URL}/users?email=${encodeURIComponent(email)}`);
-
-  if (response.status === 404) {
-    return [];
-  }
-
-  const data = await response.json();
-  return data;
+  // MockAPI puede responder 404 cuando el filtro no encuentra coincidencias.
+  if (response.status === 404) return [];
+  if (!response.ok) throw new Error(`Error del servidor (${response.status})`);
+  return response.json();
 };
 
 export const createUser = async (user) => {
-  const response = await fetch(`${API_URL}/users`, {
+  return request(`${API_URL}/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   });
-  const data = await response.json();
-  return data;
 };
 
 export const getDoctors = async () => {
-  const response = await fetch(`${API_URL}/doctors`);
-  const data = await response.json();
-  return data;
+  return request(`${API_URL}/doctors`);
 };
 
 export const getAppointments = async () => {
-  const response = await fetch(`${API_URL_CITAS}/appointments`);
-  const data = await response.json();
-  return data;
+  return request(`${API_URL_CITAS}/appointments`);
 };    
 
+export const createAppointment = async (appointment) =>
+  request(`${API_URL_CITAS}/appointments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(appointment),
+  });
+
 export const updateAppointment = async (id, data) => {
-  const response = await fetch(`${API_URL_CITAS}/appointments/${id}`, {
+  return request(`${API_URL_CITAS}/appointments/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  const result = await response.json();
-  return result;
 };
 
 
 // ---------- MÉDICOS ----------
 export const createDoctor = async (doctor) => {
-  const response = await fetch(`${API_URL}/doctors`, {
+  return request(`${API_URL}/doctors`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(doctor),
   });
-  return await response.json();
 };
 
 export const updateDoctor = async (id, data) => {
-  const response = await fetch(`${API_URL}/doctors/${id}`, {
+  return request(`${API_URL}/doctors/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return await response.json();
 };
 
 export const getDoctorById = async (id) => {
-  const response = await fetch(`${API_URL}/doctors/${id}`);
-  return await response.json();
+  return request(`${API_URL}/doctors/${id}`);
 };
 
 // ---------- USUARIOS (admin) ----------
 export const getUsersFull = async () => {
-  const response = await fetch(`${API_URL}/users`);
-  return await response.json();
+  return request(`${API_URL}/users`);
 };
 
 export const updateUser = async (id, data) => {
-  const response = await fetch(`${API_URL}/users/${id}`, {
+  return request(`${API_URL}/users/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return await response.json();
 };
