@@ -16,10 +16,13 @@ export const getUsers = async () => {
 
 export const getUserByEmail = async (email) => {
   const response = await fetch(`${API_URL}/users?email=${encodeURIComponent(email)}`);
-  // MockAPI puede responder 404 cuando el filtro no encuentra coincidencias.
-  if (response.status === 404) return [];
-  if (!response.ok) throw new Error(`Error del servidor (${response.status})`);
-  return response.json();
+
+  if (response.status === 404) {
+    return [];
+  }
+
+  const data = await response.json();
+  return data;
 };
 
 export const createUser = async (user) => {
