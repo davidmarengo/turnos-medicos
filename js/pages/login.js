@@ -11,18 +11,22 @@ renderNavbar();
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
 
-  const users = await getUserByEmail(email);
-  const user = users.find((u) => u.email === email);
+  try {
+    const users = await getUserByEmail(email);
+    const user = users.find((u) => String(u.email).toLowerCase() === email);
 
-  if (!user || user.password !== password) {
-    mensaje.textContent = "Email o contraseña incorrectos";
-    return;
+    if (!user || user.password !== password) {
+      mensaje.textContent = "Email o contraseña incorrectos";
+      return;
+    }
+
+    saveSession(user);
+    window.location.href = user.role === "ADMIN" ? "dashboard.html" : "medicos.html";
+  } catch (error) {
+    console.error(error);
+    mensaje.textContent = "No se pudo conectar con el sistema. Revisá tu conexión e intentá de nuevo.";
   }
-
-  saveSession(user);
-    window.location.href = user.role === "ADMIN" ? "admin-medicos.html" : "medicos.html";
-
 });

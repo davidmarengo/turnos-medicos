@@ -3,13 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TÍTULO - dashboard</title>
+  <title>Dashboard - Turnos Médicos</title>
+  <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
   <nav id="navbar"></nav>
   <main>
-    <h1>TÍTULO</h1>
+    <h1>Dashboard</h1>
+    <p id="resumen-turnos"></p>
+    <ul id="turnos-por-estado"></ul>
+    <section class="dashboard-accesos" aria-label="Accesos de administración">
+      <h2>Administración</h2>
+      <div class="dashboard-accesos-lista">
+        <a class="dashboard-acceso" href="admin-medicos.html">
+          <h3>Médicos</h3>
+          <p>Crear y editar médicos y sus días de atención.</p>
+        </a>
+        <a class="dashboard-acceso" href="admin-turnos.html">
+          <h3>Turnos</h3>
+          <p>Consultar, actualizar estados y reprogramar turnos.</p>
+        </a>
+        <a class="dashboard-acceso" href="admin-usuarios.html">
+          <h3>Usuarios</h3>
+          <p>Crear usuarios y gestionar sus contraseñas.</p>
+        </a>
+      </div>
+    </section>
   </main>
-  <script type="module" src="js/pages/dasboard.js"></script>
+  <script type="module" src="js/pages/dashboard.js"></script>
 </body>
 </html>

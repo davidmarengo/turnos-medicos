@@ -13,6 +13,15 @@ export const getNombreDia = (fecha) => {
   return DIAS_SEMANA[date.getDay()];
 };
 
+const normalizarDia = (dia) => String(dia || "")
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .trim()
+  .toLocaleLowerCase("es");
+
+export const atiendeEseDia = (doctor, dia) =>
+  (doctor?.diasDisponibles || []).some((disponible) => normalizarDia(disponible) === normalizarDia(dia));
+
 const hoyISO = () => {
   const hoy = new Date();
   const mes = String(hoy.getMonth() + 1).padStart(2, "0");

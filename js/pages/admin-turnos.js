@@ -2,7 +2,7 @@
 import { requireRole } from "../session.js";
 import { renderNavbar } from "../navbar.js";
 import { getAppointments, getDoctors, getUsers, updateAppointment } from "../api.js";
-import { ESTADOS, HORARIOS, getNombreDia, esFechaPasada, estaOcupado } from "../turnos-utils.js";
+import { ESTADOS, HORARIOS, getNombreDia, esFechaPasada, estaOcupado, atiendeEseDia } from "../turnos-utils.js";
 
 const session = requireRole("ADMIN");
 
@@ -115,8 +115,8 @@ const iniciarFormulario = () => {
     }
 
     const dia = getNombreDia(fecha);
-    if (!doctorActual.diasDisponibles.includes(dia)) {
-      mensaje.textContent = `El médico no atiende el día ${dia}. Atiende: ${doctorActual.diasDisponibles.join(", ")}`;
+    if (!atiendeEseDia(doctorActual, dia)) {
+      mensaje.textContent = `El médico no atiende el día ${dia}. Atiende: ${(doctorActual.diasDisponibles || []).join(", ")}`;
       return;
     }
 
