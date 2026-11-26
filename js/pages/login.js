@@ -24,7 +24,7 @@ form.addEventListener("submit", async (event) => {
     }
 
     saveSession(user);
-    window.location.href = user.role === "ADMIN" ? "dashboard.html" : "medicos.html";
+    window.location.href = user.role === "ADMIN" ? "dashboard.html" : "mis-turnos.html";
   } catch (error) {
     console.error(error);
     mensaje.textContent = "No se pudo conectar con el sistema. Revisá tu conexión e intentá de nuevo.";
